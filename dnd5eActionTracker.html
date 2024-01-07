@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>DnD 5e Action Tracker</title>
+    <script>
+        const ImportCharacter = () => {
+            const input = document.getElementById('jsonFileInput');
+            const output = document.getElementById('output');
+
+            const file = input.files[0];
+            if (!file) {
+                alert("Please select a JSON file.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const jsonString = event.target.result;
+                try {
+                    const jsonData = JSON.parse(jsonString);
+                    displayJsonData(jsonData);
+                } catch (error) {
+                    alert("Error parsing JSON file: " + error.message);
+                }
+            };
+
+            reader.readAsText(file);
+        }
+
+        function displayJsonData(data) {
+            const output = document.getElementById('output');
+            output.innerHTML = "<pre>" + JSON.stringify(data, null, 2) + "</pre>";
+        }
+    </script>
+    <style>
+        table {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 5px;
+        }
+
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 5px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="file" id="jsonFileInput" accept=".json">
+    <button onclick="ImportCharacter()">Import Character</button>
+    <div>
+        <table class="actionsTable">
+            <tr>
+                <th>Actions</th>
+                <th>Bonus Actions</th>
+                <th>Rections</th>
+                <th>Free Actions</th>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+        </table>
+        <br>
+        <label class="switch">
+            <span id="formSwitch1">Test</span>
+            <input type="checkbox" >
+        </label>
+    </div>
+    <div id="output"></div>
+</body>
+
+</html>
