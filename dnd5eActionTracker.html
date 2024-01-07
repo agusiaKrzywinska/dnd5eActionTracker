@@ -6,8 +6,7 @@
     <script>
         const ImportCharacter = () => {
             const input = document.getElementById('jsonFileInput');
-            const output = document.getElementById('output');
-
+            
             const file = input.files[0];
             if (!file) {
                 alert("Please select a JSON file.");
@@ -19,7 +18,7 @@
                 const jsonString = event.target.result;
                 try {
                     const jsonData = JSON.parse(jsonString);
-                    displayJsonData(jsonData);
+                    updateTable(jsonData);
                 } catch (error) {
                     alert("Error parsing JSON file: " + error.message);
                 }
@@ -28,9 +27,36 @@
             reader.readAsText(file);
         }
 
-        function displayJsonData(data) {
-            const output = document.getElementById('output');
-            output.innerHTML = "<pre>" + JSON.stringify(data, null, 2) + "</pre>";
+        let playerData = null;
+
+        function setupStates(data) {
+
+        }
+
+        function updateTable(data) {
+            
+            const actionTable = document.getElementById('actionTable');
+            const states = document.getElementById('states');
+
+            playerData = data;
+
+            //read in all abilities group them.
+            for (let i = 0; i < data.allActions.length; i++) {
+                switch (data.allActions[i].actionType) {
+                    case "Action":
+                        
+                        break;
+                    case "Bonus Action":
+                        break;
+                    case "Reaction":
+                        break;
+                    case "Free Action":
+                        break;
+                }
+            }
+            //setup default header info
+            actionTable.innerHTML = "<tr><th>Actions</th><th>Bonus Actions</th><th>Reactions</th><th>Free Actions</th></tr>";
+            //setup child elements
         }
     </script>
     <style>
@@ -62,24 +88,14 @@
     <input type="file" id="jsonFileInput" accept=".json">
     <button onclick="ImportCharacter()">Import Character</button>
     <div>
-        <table class="actionsTable">
-            <tr>
-                <th>Actions</th>
-                <th>Bonus Actions</th>
-                <th>Rections</th>
-                <th>Free Actions</th>
-            </tr>
-            <tr>
-                <td></td>
-            </tr>
+        <table class="actionsTable" id="actionTable">
         </table>
         <br>
-        <label class="switch">
+        <label class="switch" id="states">
             <span id="formSwitch1">Test</span>
-            <input type="checkbox" >
+            <input type="checkbox">
         </label>
     </div>
-    <div id="output"></div>
 </body>
 
 </html>

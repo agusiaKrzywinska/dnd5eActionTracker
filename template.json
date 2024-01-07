@@ -1,0 +1,39 @@
+{
+    "allActions": [
+        {
+            "actionType": "Action",
+            "name": "Ability 1",
+            "defaultActive": true,
+            "description": ""
+        },
+        {
+            "actionType": "Bonus Action",
+            "name": "Bonus Ability 1",
+            "defaultActive": true,
+            "description": ""
+        },
+        {
+            "actionType": "Reaction",
+            "name": "Reaction Ability 1",
+            "defaultActive": true,
+            "description": ""
+        },
+        {
+            "actionType": "Free Action",
+            "name": "21 Catapult",
+            "defaultActive": true,
+            "description": "When you roll 21 for attack roll, ability check or saving throw"
+        }
+    ],
+    "allStates": [
+        {
+            "name": "Rage",
+            "allowedActions": [
+                "Ability 1"
+            ],
+            "disabledActions": [
+                "Bonus Ability 1"
+            ]
+        }
+    ]
+}
