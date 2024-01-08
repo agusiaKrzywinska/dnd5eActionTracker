@@ -23,17 +23,30 @@
             "name": "21 Catapult",
             "defaultActive": true,
             "description": "When you roll 21 for attack roll, ability check or saving throw"
+        },
+        {
+            "actionType": "Reaction",
+            "name": "Ability 2",
+            "defaultActive": false,
+            "description": ""
+        },
+        {
+            "actionType": "Bonus Action",
+            "name": "Hunter's Mark",
+            "defaultActive": false,
+            "description": ""
         }
     ],
     "allStates": [
         {
-            "name": "Rage",
+            "name": "Primal Bear",
             "allowedActions": [
-                "Ability 1"
+                "Hunter's Mark"
             ],
             "disabledActions": [
-                "Bonus Ability 1"
-            ]
+                "21 Catapult"
+            ],
+            "startActive": false
         }
     ]
 }

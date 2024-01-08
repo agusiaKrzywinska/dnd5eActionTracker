@@ -6,7 +6,7 @@
     <script>
         const ImportCharacter = () => {
             const input = document.getElementById('jsonFileInput');
-            
+
             const file = input.files[0];
             if (!file) {
                 alert("Please select a JSON file.");
@@ -18,6 +18,7 @@
                 const jsonString = event.target.result;
                 try {
                     const jsonData = JSON.parse(jsonString);
+                    setupStates(jsonData);
                     updateTable(jsonData);
                 } catch (error) {
                     alert("Error parsing JSON file: " + error.message);
@@ -30,33 +31,98 @@
         let playerData = null;
 
         function setupStates(data) {
+            const states = document.getElementById('states');
+            states.innerHTML = "";
 
+            for (let i = 0; i < data.allStates.length; i++) {
+                var state = "<label><span>"
+                state += data.allStates[i].name + "</span><input type='checkbox' onchange='updateTable(playerData)'";
+                if (data.allStates[i].startActive) {
+                    state += " checked";
+                }
+                state += "></label>";
+                states.innerHTML += state;
+            }
         }
 
         function updateTable(data) {
-            
+
             const actionTable = document.getElementById('actionTable');
             const states = document.getElementById('states');
 
             playerData = data;
 
+            var allActions = [];
+            var allBonusActions = [];
+            var allReactions = [];
+            var allFreeActions = [];
+
             //read in all abilities group them.
             for (let i = 0; i < data.allActions.length; i++) {
+                //TODO: check if action should be active or not
+
+                var isUsable = data.allActions[i].defaultActive;
+
+                for (let j = 0; j < data.allStates.length; j++) {
+                    const checkbox = states.children[j].querySelector('input[type="checkbox"]');
+
+                    if (isUsable) {
+                        if (checkbox.checked && data.allStates[j].disabledActions.includes(data.allActions[i].name)) {
+
+                            isUsable = false;
+                        }
+                    }
+                    else {
+                        if (checkbox.checked && data.allStates[j].allowedActions.includes(data.allActions[i].name)) {
+
+                            isUsable = true;
+                        }
+                    }
+                }
+
+
+                if (isUsable == false) continue;
+
                 switch (data.allActions[i].actionType) {
                     case "Action":
-                        
+                        allActions.push(data.allActions[i]);
                         break;
                     case "Bonus Action":
+                        allBonusActions.push(data.allActions[i]);
                         break;
                     case "Reaction":
+                        allReactions.push(data.allActions[i]);
                         break;
                     case "Free Action":
+                        allFreeActions.push(data.allActions[i]);
                         break;
                 }
             }
+
             //setup default header info
             actionTable.innerHTML = "<tr><th>Actions</th><th>Bonus Actions</th><th>Reactions</th><th>Free Actions</th></tr>";
             //setup child elements
+            var maxRows = Math.max(allActions.length, allBonusActions.length, allReactions.length, allFreeActions.length);
+            for (let i = 0; i < maxRows; i++) {
+                var row = "<tr><td>";
+                if (allActions[i] != null) {
+                    row += allActions[i].name + "<p>" + allActions[i].description + "</p>";
+                }
+                row += "</td><td>";
+                if (allBonusActions[i] != null) {
+                    row += allBonusActions[i].name + "<p>" + allBonusActions[i].description + "</p>";
+                }
+                row += "</td><td>";
+                if (allReactions[i] != null) {
+                    row += allReactions[i].name + "<p>" + allReactions[i].description + "</p>";
+                }
+                row += "</td><td>";
+                if (allFreeActions[i] != null) {
+                    row += allFreeActions[i].name + "<p>" + allFreeActions[i].description + "</p>";
+                }
+                row += "</td></tr>";
+                actionTable.innerHTML += row;
+            }
         }
     </script>
     <style>
@@ -81,6 +147,10 @@
         tr:nth-child(even) {
             background-color: #dddddd;
         }
+
+        p {
+            font-size: 10pt;
+        }
     </style>
 </head>
 
@@ -91,10 +161,7 @@
         <table class="actionsTable" id="actionTable">
         </table>
         <br>
-        <label class="switch" id="states">
-            <span id="formSwitch1">Test</span>
-            <input type="checkbox">
-        </label>
+        <div id="states"> </div>
     </div>
 </body>
 
