@@ -33,17 +33,18 @@
         {
             "actionType": "Bonus Action",
             "name": "Hunter's Mark",
-            "defaultActive": true,
+            "defaultActive": false,
             "description": ""
         }
     ],
     "allStates": [
         {
-            "name": "Rage",
-            "allowedActions": [],
-            "disabledActions": [
-                "21 Catapult",
+            "name": "Primal Bear",
+            "allowedActions": [
                 "Hunter's Mark"
+            ],
+            "disabledActions": [
+                "21 Catapult"
             ],
             "startActive": false
         }
