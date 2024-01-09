@@ -2,20 +2,68 @@
     "allActions": [
         {
             "actionType": "Action",
-            "name": "Ability 1",
+            "name": "Weapon Attack",
             "defaultActive": true,
+            "description": "Use Ecilpse Sol or something to attack"
+        },
+        {
+            "actionType": "Action",
+            "name": "Green-Flame Blade/Booming Blade",
+            "defaultActive": true,
+            "description": "Bonus Damage with a melee weapon attack"
+        },
+        {
+            "actionType": "Action",
+            "name": "Lay on Hands",
+            "defaultActive": false,
+            "description": "heal 5 hp or cure diseases/poision"
+        },
+        {
+            "actionType": "Action",
+            "name": "Zyrial Application",
+            "defaultActive": true,
+            "description": "Encrust weapon, bejewel armor or dazzle a focus"
+        },
+        {
+            "actionType": "Bonus Action",
+            "name": "Second Wind",
+            "defaultActive": false,
+            "description": "1d10 + 1 hp back"
+        },
+        {
+            "actionType": "Bonus Action",
+            "name": "Rage",
+            "defaultActive": false,
+            "description": "adv on str checks, gain resistance no magic."
+        },
+        {
+            "actionType": "Bonus Action",
+            "name": "Bardic Inspiration",
+            "defaultActive": false,
+            "description": "give someone 1d6 bardic."
+        },
+        {
+            "actionType": "Bonus Action",
+            "name": "Hunter's Mark",
+            "defaultActive": false,
             "description": ""
         },
         {
             "actionType": "Bonus Action",
-            "name": "Bonus Ability 1",
-            "defaultActive": true,
-            "description": ""
+            "name": "Wearbear Transformation",
+            "defaultActive": false,
+            "description": "Turn into bear or back into human"
         },
         {
             "actionType": "Reaction",
             "name": "Reaction Ability 1",
             "defaultActive": true,
+            "description": ""
+        },
+        {
+            "actionType": "Reaction",
+            "name": "Ability 2",
+            "defaultActive": false,
             "description": ""
         },
         {
@@ -25,16 +73,34 @@
             "description": "When you roll 21 for attack roll, ability check or saving throw"
         },
         {
-            "actionType": "Reaction",
-            "name": "Ability 2",
+            "actionType": "Free Action",
+            "name": "Favored Foe",
             "defaultActive": false,
-            "description": ""
+            "description": "When you hit an attack roll, start concentrating and add 1d4 to damage for 1 min"
         },
         {
-            "actionType": "Bonus Action",
-            "name": "Hunter's Mark",
+            "actionType": "Free Action",
+            "name": "Take cold damage scarf bonus",
+            "defaultActive": true,
+            "description": "reduce cold damage by 1d4"
+        },
+        {
+            "actionType": "Free Action",
+            "name": "Cast healing or cold damage spell scarf bonus",
+            "defaultActive": true,
+            "description": "add bonus of 1d8"
+        },
+        {
+            "actionType": "Free Action",
+            "name": "Encrusted Weapon",
             "defaultActive": false,
-            "description": ""
+            "description": "bonus 1d6 damage, crit causes 3d6 damage to each creature of your choice within 5ft of original"
+        },
+        {
+            "actionType": "Free Action",
+            "name": "Bejeweled Armor",
+            "defaultActive": false,
+            "description": "radiant or force reduce 1d6 damage. Zero HP instead regain 2d6 hp, bye bye zyrial"
         }
     ],
     "allStates": [
@@ -44,8 +110,85 @@
                 "Hunter's Mark"
             ],
             "disabledActions": [
-                "21 Catapult"
+                "21 Catapult",
+                "Green-Flame Blade/Booming Blade"
             ],
+            "startActive": false
+        },
+        {
+            "name": "Raging",
+            "allowedActions": [],
+            "disabledActions": [
+                "21 Catapult",
+                "Green-Flame Blade/Booming Blade",
+                "Favored Foe"
+            ],
+            "startActive": false
+        },
+        {
+            "name": "Has Lay on Hands",
+            "allowedActions": [
+                "Lay on Hands"
+            ],
+            "disabledActions": [],
+            "startActive": true
+        },
+        {
+            "name": "Has Second Wind",
+            "allowedActions": [
+                "Second Wind"
+            ],
+            "disabledActions": [],
+            "startActive": true
+        },
+        {
+            "name": "Has Bardic",
+            "allowedActions": [
+                "Bardic Inspiration"
+            ],
+            "disabledActions": [],
+            "startActive": true
+        },
+        {
+            "name": "Has Rage",
+            "allowedActions": [
+                "Rage"
+            ],
+            "disabledActions": [],
+            "startActive": true
+        },
+        {
+            "name": "Has Favored Foe",
+            "allowedActions": [
+                "Favored Foe"
+            ],
+            "disabledActions": [],
+            "startActive": true
+        },
+        {
+            "name": "Has Moonlight",
+            "allowedActions": [
+                "Wearbear Transformation"
+            ],
+            "disabledActions": [],
+            "startActive": true
+        },
+        {
+            
+            "name": "Encrusted Weapon",
+            "allowedActions": [
+                "Encrusted Weapon"
+            ],
+            "disabledActions": [],
+            "startActive": false
+        },
+        {
+            
+            "name": "Bejeweled Armor",
+            "allowedActions": [
+                "Bejeweled Armor"
+            ],
+            "disabledActions": [],
             "startActive": false
         }
     ]
