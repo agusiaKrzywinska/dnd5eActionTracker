@@ -4,28 +4,54 @@
 <head>
     <title>DnD 5e Action Tracker</title>
     <script>
-        const ImportCharacter = () => {
-            const input = document.getElementById('jsonFileInput');
+        const ImportCharacter = (filePath) => {
 
-            const file = input.files[0];
-            if (!file) {
-                alert("Please select a JSON file.");
-                return;
+            if (filePath) {
+                loadFileFromProject(filePath);
             }
+            else {
+                const input = document.getElementById('jsonFileInput');
 
-            const reader = new FileReader();
-            reader.onload = function (event) {
-                const jsonString = event.target.result;
-                try {
-                    const jsonData = JSON.parse(jsonString);
-                    setupStates(jsonData);
-                    updateTable(jsonData);
-                } catch (error) {
-                    alert("Error parsing JSON file: " + error.message);
+                const file = input.files[0];
+                if (!file) {
+                    alert("Please select a JSON file.");
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const jsonString = event.target.result;
+                    try {
+                        const jsonData = JSON.parse(jsonString);
+                        setupStates(jsonData);
+                        updateTable(jsonData);
+                    } catch (error) {
+                        alert("Error parsing JSON file: " + error.message);
+                    }
+                };
+
+                reader.readAsText(file);
+            }
+        }
+
+        function loadFileFromProject(filePath) {
+            // Make an AJAX request to fetch the file from the server
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const jsonString = xhr.responseText;
+                    try {
+                        const jsonData = JSON.parse(jsonString);
+                        setupStates(jsonData);
+                        updateTable(jsonData);
+                    } catch (error) {
+                        alert("Error parsing JSON file: " + error.message);
+                    }
                 }
             };
 
-            reader.readAsText(file);
+            xhr.open("GET", filePath, true);
+            xhr.send();
         }
 
         let playerData = null;
@@ -155,8 +181,20 @@
 </head>
 
 <body>
+    <label for="jsonFileInput">Select JSON file:</label>
     <input type="file" id="jsonFileInput" accept=".json">
     <button onclick="ImportCharacter()">Import Character</button>
+
+    <br>
+
+    <label for="projectFiles">Select JSON file from Server:</label>
+    <select id="projectFiles" onchange="ImportCharacter(this.value)">
+        <option value="">Select a file</option>
+        <option value="joeTracker.json">joeTracker.json</option>
+        <option value="larcyTracker.json">larcyTracker.json</option>
+        <!-- Add more options as needed -->
+    </select>
+
     <div>
         <table class="actionsTable" id="actionTable">
         </table>
